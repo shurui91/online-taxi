@@ -9,7 +9,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>api-passenger</artifactId>
+    <artifactId>service-verificationcode</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
