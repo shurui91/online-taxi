@@ -1,6 +1,6 @@
 package com.msb.apipassenger.controller;
 
-import com.msb.apipassenger.request.VerificationCodeDTO;
+import com.msb.internalcommon.request.VerificationCodeDTO;
 import com.msb.apipassenger.service.VerificationCodeService;
 import com.msb.internalcommon.dto.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
