@@ -3,6 +3,8 @@ package com.msb.internalcommon.util;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.Claim;
+import com.auth0.jwt.interfaces.DecodedJWT;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
@@ -14,8 +16,12 @@ public class JwtUtils {
     // 盐
     private static final String SIGN = "msbtaxi";
 
+    private static final String JWT_KEY = "passengerPhone";
+
     // 生成token
-    public static String generateToken(Map<String, String> map) throws UnsupportedEncodingException {
+    public static String generateToken(String passengerPhone) throws UnsupportedEncodingException {
+        Map<String, String> map = new HashMap<>();
+        map.put(JWT_KEY, passengerPhone);
         // token过期时间
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE, 1);
@@ -34,12 +40,16 @@ public class JwtUtils {
     }
 
     // 解析token
+    public static String parseToken(String token) throws UnsupportedEncodingException {
+        DecodedJWT verify =
+                JWT.require(Algorithm.HMAC256(SIGN)).build().verify(token);
+        Claim claim = verify.getClaim(JWT_KEY);
+        return claim.asString();
+    }
 
     public static void main(String[] args) throws UnsupportedEncodingException {
-        Map<String, String> map = new HashMap<>();
-        map.put("name", "zhangsan");
-        map.put("age", "18");
-        String s = generateToken(map);
+        String s = generateToken("13955551234");
         System.out.println("生成的token是 " + s);
+        System.out.println("解析的token是 " + parseToken(s));
     }
 }
