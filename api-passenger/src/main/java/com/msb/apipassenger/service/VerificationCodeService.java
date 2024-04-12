@@ -1,8 +1,10 @@
 package com.msb.apipassenger.service;
 
+import com.msb.apipassenger.remote.ServicePassengerUserClient;
 import com.msb.apipassenger.remote.ServiceVerificationcodeClient;
 import com.msb.internalcommon.constant.CommonStatusEnum;
 import com.msb.internalcommon.dto.ResponseResult;
+import com.msb.internalcommon.request.VerificationCodeDTO;
 import com.msb.internalcommon.response.NumberCodeResponse;
 import com.msb.internalcommon.response.TokenResponse;
 import org.apache.commons.lang.StringUtils;
@@ -17,6 +19,9 @@ import java.util.concurrent.TimeUnit;
 public class VerificationCodeService {
     @Autowired
     private ServiceVerificationcodeClient serviceVerificationcodeClient;
+
+    @Autowired
+    private ServicePassengerUserClient servicePassengerUserClient;
 
     @Resource
     private RedisTemplate redisTemplate;
@@ -83,8 +88,12 @@ public class VerificationCodeService {
                     CommonStatusEnum.VERIFICATION_CODE_ERROR.getValue());
         }
         System.out.println("校验验证码");
+
         // 判断原来是否有用户，并进行对应处理
-        System.out.println("判断原来是否有用户，并进行对应处理");
+        VerificationCodeDTO verificationCodeDTO = new VerificationCodeDTO();
+        verificationCodeDTO.setPassengerPhone(passengerPhone);
+        servicePassengerUserClient.loginOrRegister(verificationCodeDTO);
+
         // 颁发令牌
         System.out.println("颁发令牌");
         // 响应
