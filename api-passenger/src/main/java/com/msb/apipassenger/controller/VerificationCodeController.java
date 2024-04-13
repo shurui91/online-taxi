@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.UnsupportedEncodingException;
+
 @RestController
 public class VerificationCodeController {
     @Autowired
@@ -22,7 +24,7 @@ public class VerificationCodeController {
     }
 
     @PostMapping("/verification-code-check")
-    public ResponseResult verificationCodeCheck(@RequestBody VerificationCodeDTO verificationCodeDTO) {
+    public ResponseResult verificationCodeCheck(@RequestBody VerificationCodeDTO verificationCodeDTO) throws UnsupportedEncodingException {
         String passengerPhone = verificationCodeDTO.getPassengerPhone();
         String verificationCode = verificationCodeDTO.getVerificationCode();
         System.out.println("passengerPhone is: " + passengerPhone);

@@ -3,16 +3,19 @@ package com.msb.apipassenger.service;
 import com.msb.apipassenger.remote.ServicePassengerUserClient;
 import com.msb.apipassenger.remote.ServiceVerificationcodeClient;
 import com.msb.internalcommon.constant.CommonStatusEnum;
+import com.msb.internalcommon.constant.IdentityConstant;
 import com.msb.internalcommon.dto.ResponseResult;
 import com.msb.internalcommon.request.VerificationCodeDTO;
 import com.msb.internalcommon.response.NumberCodeResponse;
 import com.msb.internalcommon.response.TokenResponse;
+import com.msb.internalcommon.util.JwtUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.UnsupportedEncodingException;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -67,7 +70,7 @@ public class VerificationCodeService {
      * @param verificationCode
      * @return
      */
-    public ResponseResult checkCode(String passengerPhone, String verificationCode) {
+    public ResponseResult checkCode(String passengerPhone, String verificationCode) throws UnsupportedEncodingException {
         // 根据手机号，去redis读取验证码
         System.out.println("根据手机号，去redis读取验证码");
         // 生成key
@@ -94,11 +97,13 @@ public class VerificationCodeService {
         verificationCodeDTO.setPassengerPhone(passengerPhone);
         servicePassengerUserClient.loginOrRegister(verificationCodeDTO);
 
-        // 颁发令牌
-        System.out.println("颁发令牌");
+        // 颁发令牌，不应该用魔法值，用常量
+        String token = JwtUtils.generateToken(passengerPhone,
+                IdentityConstant.PASSENGER_IDENTITY);
+
         // 响应
         TokenResponse tokenResponse = new TokenResponse();
-        tokenResponse.setToken("token value");
+        tokenResponse.setToken(token);
         return ResponseResult.success(tokenResponse);
     }
 }
