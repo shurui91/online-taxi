@@ -7,6 +7,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class InterceptorConfig implements WebMvcConfigurer {
+    // 注入拦截器，因为autowire的注入方式会晚于拦截器的注入，所以这里使用@Bean注入
     @Bean
     public JwtInterceptor jwtInterceptor() {
         return new JwtInterceptor();
