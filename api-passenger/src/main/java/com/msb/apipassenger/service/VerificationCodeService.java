@@ -9,12 +9,13 @@ import com.msb.internalcommon.request.VerificationCodeDTO;
 import com.msb.internalcommon.response.NumberCodeResponse;
 import com.msb.internalcommon.response.TokenResponse;
 import com.msb.internalcommon.util.JwtUtils;
+import com.msb.internalcommon.util.RedisPrefixUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.io.UnsupportedEncodingException;
 import java.util.concurrent.TimeUnit;
 
@@ -26,8 +27,8 @@ public class VerificationCodeService {
     @Autowired
     private ServicePassengerUserClient servicePassengerUserClient;
 
-    @Resource
-    private RedisTemplate redisTemplate;
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
 
     // 验证码key前缀
     private String verificationCodePrefix = "passenger-verification-code-";
@@ -52,30 +53,12 @@ public class VerificationCodeService {
         // 存入redis
         System.out.println("将手机号和验证码存入redis");
         // key, value, 过期时间
-        String key = generateKeyByPhone(phoneNumber);
+        String key = RedisPrefixUtils.generateKeyByPhone(phoneNumber);
         // 存入redis
-        redisTemplate.opsForValue().set(key, numberCode, 2, TimeUnit.MINUTES);
+        stringRedisTemplate.opsForValue().set(key, numberCode + "", 2,
+                TimeUnit.MINUTES);
         // 通过电信服务商，发送验证码到手机，这里不实现
         return ResponseResult.success();
-    }
-
-    /**
-     * 根据手机号生成key
-     * @param phoneNumber
-     * @return
-     */
-    private String generateKeyByPhone(String phoneNumber) {
-        return verificationCodePrefix + phoneNumber;
-    }
-
-    /**
-     * 根据手机号和身份生成token key
-     * @param phone
-     * @param identity
-     * @return
-     */
-    private String generateTokenKey(String phone, String identity) {
-        return tokenPrefix + phone + "-" + identity;
     }
 
     /**
@@ -88,23 +71,23 @@ public class VerificationCodeService {
         // 根据手机号，去redis读取验证码
         System.out.println("根据手机号，去redis读取验证码");
         // 生成key
-        String key = generateKeyByPhone(passengerPhone);
+        String key = RedisPrefixUtils.generateKeyByPhone(passengerPhone);
         // 根据key获取value
-        Integer codeInRedis = (Integer) redisTemplate.opsForValue().get(key);
+        String codeInRedis = stringRedisTemplate.opsForValue().get(key);
         System.out.println("redis中的验证码为：" + codeInRedis);
 
         // 校验验证码
+        System.out.println("校验验证码");
         // 判断验证码是否为空
         if (StringUtils.isBlank(codeInRedis + "") || codeInRedis == null) {
             return ResponseResult.fail(CommonStatusEnum.VERIFICATION_CODE_ERROR.getCode(),
                     CommonStatusEnum.VERIFICATION_CODE_ERROR.getValue());
         }
         // 判断验证码是否正确
-        if (!codeInRedis.equals(Integer.parseInt(verificationCode))) {
+        if (!codeInRedis.equals(verificationCode)) {
             return ResponseResult.fail(CommonStatusEnum.VERIFICATION_CODE_ERROR.getCode(),
                     CommonStatusEnum.VERIFICATION_CODE_ERROR.getValue());
         }
-        System.out.println("校验验证码");
 
         // 判断原来是否有用户，并进行对应处理
         VerificationCodeDTO verificationCodeDTO = new VerificationCodeDTO();
@@ -115,8 +98,9 @@ public class VerificationCodeService {
         String token = JwtUtils.generateToken(passengerPhone,
                 IdentityConstant.PASSENGER_IDENTITY);
         // 将token存到redis中
-        String tokenKey = generateTokenKey(passengerPhone, IdentityConstant.PASSENGER_IDENTITY);
-        redisTemplate.opsForValue().set(tokenKey, token, 30, TimeUnit.DAYS);
+        String tokenKey = RedisPrefixUtils.generateTokenKey(passengerPhone,
+                IdentityConstant.PASSENGER_IDENTITY);
+        stringRedisTemplate.opsForValue().set(tokenKey, token, 30, TimeUnit.DAYS);
 
         // 响应
         TokenResponse tokenResponse = new TokenResponse();
