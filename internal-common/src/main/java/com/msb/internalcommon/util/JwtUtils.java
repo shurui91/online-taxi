@@ -3,6 +3,9 @@ package com.msb.internalcommon.util;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.AlgorithmMismatchException;
+import com.auth0.jwt.exceptions.SignatureVerificationException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.msb.internalcommon.dto.TokenResult;
 
@@ -58,6 +61,22 @@ public class JwtUtils {
         tokenResult.setPhone(phone);
         tokenResult.setIdentity(identity);
         return tokenResult;
+    }
+
+    /**
+     * 主要判断token是否异常
+     * @param token
+     * @return
+     */
+    public static TokenResult checkToken(String token) {
+        TokenResult tokenResult = null;
+        // 只要有异常，就直接报错即可，无需关注到底是什么错误
+        try {
+            tokenResult = JwtUtils.parseToken(token);
+        } catch (Exception e) {
+
+        }
+        return null;
     }
 
     public static void main(String[] args) throws UnsupportedEncodingException {

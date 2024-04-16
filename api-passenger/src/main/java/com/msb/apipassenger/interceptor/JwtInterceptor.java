@@ -1,8 +1,5 @@
 package com.msb.apipassenger.interceptor;
 
-import com.auth0.jwt.exceptions.AlgorithmMismatchException;
-import com.auth0.jwt.exceptions.SignatureVerificationException;
-import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.msb.internalcommon.constant.TokenConstants;
 import com.msb.internalcommon.dto.ResponseResult;
 import com.msb.internalcommon.dto.TokenResult;
@@ -27,23 +24,9 @@ public class JwtInterceptor implements HandlerInterceptor {
         boolean res = true;
         String resString = "";
         String token = request.getHeader("Authorization");
-        TokenResult tokenResult = null;
+
         // 解析token
-        try {
-            tokenResult = JwtUtils.parseToken(token);
-        } catch (SignatureVerificationException e) {
-            resString = "token sign error";
-            res = false;
-        } catch (TokenExpiredException e) {
-            resString = "token expired";
-            res = false;
-        } catch (AlgorithmMismatchException e) {
-            resString = "token algorithm mismatch";
-            res = false;
-        } catch (Exception e) {
-            resString = "token invalid";
-            res = false;
-        }
+        TokenResult tokenResult = JwtUtils.checkToken(token);
 
         if (tokenResult == null) {
             resString = "token invalid";
@@ -56,14 +39,9 @@ public class JwtInterceptor implements HandlerInterceptor {
                     identity, TokenConstants.ACCESS_TOKEN_TYPE);
             // 从redis中获取token
             String tokenRedis = stringRedisTemplate.opsForValue().get(tokenKey);
-            if (StringUtils.isBlank(tokenRedis)) {
+            if (StringUtils.isBlank(tokenRedis) || !token.trim().equals(tokenRedis.trim())) {
                 resString = "token invalid";
                 res = false;
-            } else {
-                if (!token.trim().equals(tokenRedis.trim())) {
-                    resString = "token invalid";
-                    res = false;
-                }
             }
         }
 
