@@ -3,7 +3,8 @@ package com.msb.apipassenger.service;
 import com.msb.apipassenger.remote.ServicePassengerUserClient;
 import com.msb.apipassenger.remote.ServiceVerificationcodeClient;
 import com.msb.internalcommon.constant.CommonStatusEnum;
-import com.msb.internalcommon.constant.IdentityConstant;
+import com.msb.internalcommon.constant.IdentityConstants;
+import com.msb.internalcommon.constant.TokenConstants;
 import com.msb.internalcommon.dto.ResponseResult;
 import com.msb.internalcommon.request.VerificationCodeDTO;
 import com.msb.internalcommon.response.NumberCodeResponse;
@@ -37,6 +38,7 @@ public class VerificationCodeService {
 
     /**
      * 生成验证码
+     *
      * @param phoneNumber
      * @return
      */
@@ -62,6 +64,7 @@ public class VerificationCodeService {
 
     /**
      * 校验验证码
+     *
      * @param passengerPhone
      * @param verificationCode
      * @return
@@ -94,16 +97,29 @@ public class VerificationCodeService {
         servicePassengerUserClient.loginOrRegister(verificationCodeDTO);
 
         // 颁发令牌，不应该用魔法值，用常量
-        String token = JwtUtils.generateToken(passengerPhone,
-                IdentityConstant.PASSENGER_IDENTITY);
+        String accessToken = JwtUtils.generateToken(passengerPhone,
+                IdentityConstants.PASSENGER_IDENTITY, TokenConstants.ACCESS_TOKEN_TYPE);
+        String refreshToken = JwtUtils.generateToken(passengerPhone,
+                IdentityConstants.PASSENGER_IDENTITY, TokenConstants.REFRESH_TOKEN_TYPE);
+
         // 将token存到redis中
-        String tokenKey = RedisPrefixUtils.generateTokenKey(passengerPhone,
-                IdentityConstant.PASSENGER_IDENTITY);
-        stringRedisTemplate.opsForValue().set(tokenKey, token, 30, TimeUnit.DAYS);
+        String accessTokenKey =
+                RedisPrefixUtils.generateTokenKey(passengerPhone,
+                        IdentityConstants.PASSENGER_IDENTITY, TokenConstants.ACCESS_TOKEN_TYPE);
+        stringRedisTemplate.opsForValue().set(accessTokenKey, accessToken, 30,
+                TimeUnit.DAYS);
+
+        String refreshTokenKey =
+                RedisPrefixUtils.generateTokenKey(passengerPhone,
+                        IdentityConstants.PASSENGER_IDENTITY, TokenConstants.REFRESH_TOKEN_TYPE);
+        stringRedisTemplate.opsForValue().set(refreshTokenKey, refreshToken,
+                31, TimeUnit.DAYS);
 
         // 响应
         TokenResponse tokenResponse = new TokenResponse();
-        tokenResponse.setToken(token);
+        //tokenResponse.setToken(token);
+        tokenResponse.setAccessToken(accessToken);
+        tokenResponse.setRefreshToken(refreshToken);
         return ResponseResult.success(tokenResponse);
     }
 }

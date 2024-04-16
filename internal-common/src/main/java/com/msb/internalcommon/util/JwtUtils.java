@@ -21,12 +21,16 @@ public class JwtUtils {
     // 乘客是1，司机是2
     private static final String JWT_KEY_IDENTITY = "identity";
 
+    private static final String JWT_TOKEN_TYPE = "tokenType";
+
     // 生成token
     public static String generateToken(String passengerPhone,
-                                       String identity) throws UnsupportedEncodingException {
+                                       String identity,
+                                       String JWT_TOKEN_TYPE) throws UnsupportedEncodingException {
         Map<String, String> map = new HashMap<>();
         map.put(JWT_KEY_PHONE, passengerPhone);
         map.put(JWT_KEY_IDENTITY, identity);
+        map.put(JWT_TOKEN_TYPE, JWT_TOKEN_TYPE);
         // token过期时间
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE, 1);
@@ -57,7 +61,7 @@ public class JwtUtils {
     }
 
     public static void main(String[] args) throws UnsupportedEncodingException {
-        String s = generateToken("13955551234", "1");
+        String s = generateToken("13955551234", "1", "access_token");
         System.out.println("生成的token是 " + s);
         System.out.println("解析-------------------");
         System.out.println("解析的phone是 " + parseToken(s).getPhone());
