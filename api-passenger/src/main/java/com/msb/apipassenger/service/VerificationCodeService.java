@@ -59,7 +59,7 @@ public class VerificationCodeService {
         stringRedisTemplate.opsForValue().set(key, numberCode + "", 2,
                 TimeUnit.MINUTES);
         // 通过电信服务商，发送验证码到手机，这里不实现
-        return ResponseResult.success();
+        return ResponseResult.success(numberCode);
     }
 
     /**
@@ -106,14 +106,13 @@ public class VerificationCodeService {
         String accessTokenKey =
                 RedisPrefixUtils.generateTokenKey(passengerPhone,
                         IdentityConstants.PASSENGER_IDENTITY, TokenConstants.ACCESS_TOKEN_TYPE);
-        stringRedisTemplate.opsForValue().set(accessTokenKey, accessToken, 30,
-                TimeUnit.DAYS);
+        stringRedisTemplate.opsForValue().set(accessTokenKey, accessToken,
+         30, TimeUnit.DAYS);
 
         String refreshTokenKey =
                 RedisPrefixUtils.generateTokenKey(passengerPhone,
                         IdentityConstants.PASSENGER_IDENTITY, TokenConstants.REFRESH_TOKEN_TYPE);
-        stringRedisTemplate.opsForValue().set(refreshTokenKey, refreshToken,
-                31, TimeUnit.DAYS);
+        stringRedisTemplate.opsForValue().set(refreshTokenKey, refreshToken, 31, TimeUnit.DAYS);
 
         // 响应
         TokenResponse tokenResponse = new TokenResponse();

@@ -40,7 +40,7 @@ public class JwtInterceptor implements HandlerInterceptor {
             // 从redis中获取token
             String tokenRedis = stringRedisTemplate.opsForValue().get(tokenKey);
             if (StringUtils.isBlank(tokenRedis) || !token.trim().equals(tokenRedis.trim())) {
-                resString = "token invalid";
+                resString = "access token invalid";
                 res = false;
             }
         }
