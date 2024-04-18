@@ -10,7 +10,7 @@ public enum CommonStatusEnum {
      * 验证码过期提示：1100-1199
      */
     TOKEN_ERROR(1199, "token错误"),
-
+    USER_NOT_EXISTS(1200, "当前用户不存在"),
     SUCCESS(1, "success"),
     FAIL(0, "fail");
     int code;

@@ -1,7 +1,8 @@
 package com.msb.servicepassengeruser.service;
 
+import com.msb.internalcommon.constant.CommonStatusEnum;
+import com.msb.internalcommon.dto.PassengerUser;
 import com.msb.internalcommon.dto.ResponseResult;
-import com.msb.servicepassengeruser.dto.PassengerUser;
 import com.msb.servicepassengeruser.mapper.PassengerUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,8 +23,9 @@ public class UserService {
         Map<String, Object> map = new HashMap<>();
         map.put("passenger_phone", passengerPhone);
         List<PassengerUser> passengerUsers = passengerUserMapper.selectByMap(map);
-        // System.out.println(passengerUsers == null ? "无记录" : passengerUsers
-        // .get(0).getPassengerPhone());
+//      System.out.println(passengerUsers == null ? "无记录" :
+//                passengerUsers.get(0).getPassengerPhone());
+
         // 判断用户信息是否存在，不存在则插入用户信息
         if (passengerUsers == null || passengerUsers.size() == 0) {
             PassengerUser passengerUser = new PassengerUser();
@@ -37,5 +39,17 @@ public class UserService {
             passengerUserMapper.insert(passengerUser);
         }
         return ResponseResult.success();
+    }
+
+
+    public ResponseResult getUserByPhone(String passengerPhone) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("passenger_phone", passengerPhone);
+        List<PassengerUser> passengerUsers = passengerUserMapper.selectByMap(map);
+        if (passengerUsers == null || passengerUsers.size() == 0) {
+            return ResponseResult.fail(CommonStatusEnum.USER_NOT_EXISTS.getCode(), CommonStatusEnum.USER_NOT_EXISTS.getValue());
+        }
+        PassengerUser passengerUser = passengerUsers.get(0);
+        return ResponseResult.success(passengerUser);
     }
 }
