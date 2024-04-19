@@ -3,11 +3,17 @@ package com.msb.servicemap.remote;
 import com.msb.internalcommon.constant.AmapConfigConstants;
 import com.msb.internalcommon.response.DirectionResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 @Service
 @Slf4j
 public class MapDirectionClient {
+    @Autowired
+    private RestTemplate restTemplate;
+
     public DirectionResponse direction(String depLongitude,
                                        String depLatitude,
                                        String destLongitude,
@@ -29,6 +35,10 @@ public class MapDirectionClient {
         log.info("请求高德地图API：" + urlBuilder.toString());
 
         // 调用高德接口
+        ResponseEntity<String> directionEntity =
+                restTemplate.getForEntity(urlBuilder.toString(),
+                String.class);
+        log.info("高德地图路径规划返回信息：" + directionEntity.getBody());
 
         // 解析接口
         return null;
