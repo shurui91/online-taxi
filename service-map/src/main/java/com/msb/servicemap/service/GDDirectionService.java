@@ -12,7 +12,7 @@ public class DirectionService {
     private MapDirectionClient mapDirectionClient;
 
     /**
-     * 根据起点和终点经纬度，获取距离和时长
+     * 根据起点和终点经纬度，获取距离和时长，高德地图API
      * @param depLongitude
      * @param depLatitude
      * @param destLongitude
@@ -23,8 +23,7 @@ public class DirectionService {
                                   String depLatitude,
                                   String destLongitude,
                                   String destLatitude) {
-        mapDirectionClient.direction(depLongitude, depLatitude, destLongitude, destLatitude);
-
+        mapDirectionClient.directionByCoordinates(depLongitude, depLatitude, destLongitude, destLatitude);
         DirectionResponse directionResponse = new DirectionResponse();
         directionResponse.setDistance(1111);
         directionResponse.setDuration(22);

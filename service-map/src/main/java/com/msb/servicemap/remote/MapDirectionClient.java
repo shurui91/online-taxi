@@ -14,7 +14,7 @@ public class MapDirectionClient {
     @Autowired
     private RestTemplate restTemplate;
 
-    public DirectionResponse direction(String depLongitude,
+    public DirectionResponse directionByCoordinates(String depLongitude,
                                        String depLatitude,
                                        String destLongitude,
                                        String destLatitude) {
