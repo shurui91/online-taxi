@@ -8,7 +8,7 @@ public class AmapConfigConstants {
     /**
      * API key, need to insert your own API key
      */
-    public static final String API_KEY = "AIzaSyD5hPMtKAX54_Ue8NoKfxQISR28wIucQF8";
+    public static final String API_KEY = "AIzaSyDW3FH3r_lw0bVABAsD3vSfO8hOgtpc7Ks";
     /**
      * 路径规划 json key 值
      */
