@@ -6,27 +6,27 @@ import com.msb.servicemap.remote.MapDirectionClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
-public class DirectionService {
-    @Autowired
-    private MapDirectionClient mapDirectionClient;
-
-    /**
-     * 根据起点和终点经纬度，获取距离和时长，高德地图API
-     * @param depLongitude
-     * @param depLatitude
-     * @param destLongitude
-     * @param destLatitude
-     * @return
-     */
-    public ResponseResult driving(String depLongitude,
-                                  String depLatitude,
-                                  String destLongitude,
-                                  String destLatitude) {
-        mapDirectionClient.directionByCoordinates(depLongitude, depLatitude, destLongitude, destLatitude);
-        DirectionResponse directionResponse = new DirectionResponse();
-        directionResponse.setDistance(1111);
-        directionResponse.setDuration(22);
-        return ResponseResult.success(directionResponse);
-    }
-}
+//@Service
+//public class GDDirectionService {
+////    @Autowired
+////    private MapDirectionClient mapDirectionClient;
+//
+//    /**
+//     * 根据起点和终点经纬度，获取距离和时长，高德地图API
+//     * @param depLongitude
+//     * @param depLatitude
+//     * @param destLongitude
+//     * @param destLatitude
+//     * @return
+//     */
+//    public ResponseResult driving(String depLongitude,
+//                                  String depLatitude,
+//                                  String destLongitude,
+//                                  String destLatitude) {
+//        mapDirectionClient.directionByGD(depLongitude, depLatitude, destLongitude, destLatitude);
+//        DirectionResponse directionResponse = new DirectionResponse();
+//        directionResponse.setDistance(1111.0);
+//        directionResponse.setDuration(22);
+//        return ResponseResult.success(directionResponse);
+//    }
+//}

@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class DirectionResponse {
-    private Integer distance;
+    private Double distance;
     private Integer duration;
 }
