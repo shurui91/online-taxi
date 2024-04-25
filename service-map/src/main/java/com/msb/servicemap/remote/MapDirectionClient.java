@@ -52,7 +52,7 @@ public class MapDirectionClient {
         // endAddress = endAddress.replace(",", "+");
         // endAddress = endAddress.replace(" ", "%20");
         // 组装请求调用api
-        // https://maps.googleapis.com/maps/api/directions/json?origin=Cerritos,%20CA&destination=Lakewood,%20CA&key=AIzaSyD5hPMtKAX54_Ue8NoKfxQISR28wIucQF8
+        // https://maps.googleapis.com/maps/api/directions/json?origin=Cerritos,%20CA&destination=Lakewood,%20CA&key=xxxx
         StringBuilder urlBuilder = new StringBuilder();
         urlBuilder.append(AmapConfigConstants.DIRECTION_URL);
         urlBuilder.append("json?");
