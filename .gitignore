@@ -38,4 +38,4 @@ build/
 .DS_Store
 
 ### api key ###
-/internal-common/src/main/java/com/msb/internalcommon/constant/AmapConfigConstants.java
+internal-common/src/main/java/com/msb/internalcommon/constant/AmapConfigConstants.java
