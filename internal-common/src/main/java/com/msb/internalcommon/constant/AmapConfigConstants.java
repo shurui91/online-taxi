@@ -6,7 +6,7 @@ public class AmapConfigConstants {
      */
     public static final String DIRECTION_URL = "https://maps.googleapis.com/maps/api/directions/";
     /**
-     * API key
+     * API key, need to insert your own API key
      */
     public static final String API_KEY = "AIzaSyD5hPMtKAX54_Ue8NoKfxQISR28wIucQF8";
     /**
