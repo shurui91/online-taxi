@@ -55,12 +55,31 @@ public class ForecastPriceService {
             return ResponseResult.fail(CommonStatusEnum.PRICE_RULE_EMPTY.getCode(), CommonStatusEnum.PRICE_RULE_EMPTY.getValue());
         }
         PriceRule priceRule = priceRules.get(0);
+        log.info("根据距离、时长、计价规则，计算价格");
 
-        log.info("根据距离和时长，计算价格");
 
         // TODO: 根据出发地和目的地经纬度 计算预估价格
         ForecastPriceResponse forecastPriceResponse = new ForecastPriceResponse();
         forecastPriceResponse.setPrice(12.34);
         return ResponseResult.success(forecastPriceResponse);
+    }
+
+    /**
+     * 根据距离、时长、计价规则，计算价格
+     * @param distance
+     * @param duration
+     * @param priceRule
+     * @return
+     */
+    private double getPrice(Integer distance, Integer duration, PriceRule priceRule) {
+        // bigdecimal
+
+        // 起步价
+
+        // 里程费
+
+        // 时长费
+
+        return 0.0;
     }
 }
