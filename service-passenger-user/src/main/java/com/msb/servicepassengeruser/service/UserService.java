@@ -23,8 +23,8 @@ public class UserService {
         Map<String, Object> map = new HashMap<>();
         map.put("passenger_phone", passengerPhone);
         List<PassengerUser> passengerUsers = passengerUserMapper.selectByMap(map);
-//      System.out.println(passengerUsers == null ? "无记录" :
-//                passengerUsers.get(0).getPassengerPhone());
+      System.out.println(passengerUsers == null ? "无记录" :
+                passengerUsers.get(0).getPassengerPhone());
 
         // 判断用户信息是否存在，不存在则插入用户信息
         if (passengerUsers == null || passengerUsers.size() == 0) {
