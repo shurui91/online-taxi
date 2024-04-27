@@ -15,10 +15,8 @@ public class ForecastController {
 
     @PostMapping("/forecast-price")
     public ResponseResult forecastPrice(@RequestBody GDForecastPriceDTO forecastPriceDTO) {
-        String depLongitude = forecastPriceDTO.getDepLongitude();
-        String depLatitude = forecastPriceDTO.getDepLatitude();
-        String destLongitude = forecastPriceDTO.getDestLongitude();
-        String destLatitude = forecastPriceDTO.getDestLatitude();
-        return forecastPriceService.forcastPrice(depLongitude, depLatitude, destLongitude, destLatitude);
+        String startAddress = forecastPriceDTO.getStartAddress();
+        String endAddress = forecastPriceDTO.getEndAddress();
+        return forecastPriceService.forecastPrice(startAddress, endAddress);
     }
 }

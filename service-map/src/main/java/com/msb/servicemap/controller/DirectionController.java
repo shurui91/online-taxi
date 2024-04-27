@@ -1,15 +1,10 @@
 package com.msb.servicemap.controller;
 
 import com.msb.internalcommon.dto.ResponseResult;
-import com.msb.internalcommon.request.GDForecastPriceDTO;
 import com.msb.internalcommon.request.GoogleForecastPriceDTO;
-import com.msb.servicemap.service.GDDirectionService;
 import com.msb.servicemap.service.GoogleDirectionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/direction")
@@ -26,7 +21,8 @@ public class DirectionController {
 //        return directionService.driving(depLongitude, depLatitude, destLongitude, destLatitude);
 //    }
 
-    @GetMapping("/googledriving")
+    // 这里只是为了openfeign才改成post
+    @PostMapping("/googledriving")
     public ResponseResult driving(@RequestBody GoogleForecastPriceDTO forecastPriceDTO) {
         String startAddress = forecastPriceDTO.getStartAddress();
         String endAddress = forecastPriceDTO.getEndAddress();
