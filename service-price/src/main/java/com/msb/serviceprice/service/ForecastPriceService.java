@@ -111,7 +111,7 @@ public class ForecastPriceService {
         price = BigDecimalUtils.add(price, timeFare);
 
         BigDecimal priceBigdecimal = BigDecimal.valueOf(price);
-        priceBigdecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        priceBigdecimal = BigDecimal.valueOf(priceBigdecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
         return priceBigdecimal.doubleValue();
     }
 
@@ -121,6 +121,6 @@ public class ForecastPriceService {
 //        priceRule.setUnitPricePerMinute(0.5);
 //        priceRule.setStartFare(10.0);
 //        priceRule.setStartMile(3);
-//        System.out.println(getPrice(6500, 1800, priceRule));
+//        System.out.println(getPrice(6500.0, 1800, priceRule));
 //    }
 }
