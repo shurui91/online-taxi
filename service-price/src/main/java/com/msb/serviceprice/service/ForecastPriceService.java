@@ -115,12 +115,12 @@ public class ForecastPriceService {
         return priceBigdecimal.doubleValue();
     }
 
-//    public static void main(String[] args) {
+    public static void main(String[] args) {
 //        PriceRule priceRule = new PriceRule();
 //        priceRule.setUnitPricePerMile(1.8);
 //        priceRule.setUnitPricePerMinute(0.5);
 //        priceRule.setStartFare(10.0);
 //        priceRule.setStartMile(3);
 //        System.out.println(getPrice(6500.0, 1800, priceRule));
-//    }
+    }
 }
