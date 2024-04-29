@@ -9,6 +9,12 @@ public class AmapConfigConstants {
      * API key, need to insert your own API key
      */
     public static final String API_KEY = "AIzaSyDW3FH3r_lw0bVABAsD3vSfO8hOgtpc7Ks";
+
+    /**
+     * 行政区域查询地址
+     */
+    public static final String DISTRICT_URL = "";
+
     /**
      * 路径规划 json key 值
      */
