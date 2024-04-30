@@ -25,4 +25,13 @@ public class AmapConfigConstants {
     public static final String DURATION = "duration";
     public static final String LEGS = "legs";
     public static final String TEXT = "text";
+    public static final String REGIONS = "regions";
+    public static final String ADCODE = "code";
+    public static final String NAME = "name";
+    public static final String LEVEL = "level";
+    public static final String COUNTRY = "country";
+    public static final String PROVINCE = "province";
+    public static final String CITY = "city";
+    public static final String DISTRICT = "district";
+    public static final String PARENT = "parent";
 }
