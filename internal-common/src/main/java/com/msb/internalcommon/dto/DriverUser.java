@@ -3,11 +3,12 @@ package com.msb.internalcommon.dto;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
 public class DriverUser {
-    private Integer id;
+    private Long id;
     private String address;
     private String driverName;
     private String driverPhone;
@@ -32,6 +33,6 @@ public class DriverUser {
     private LocalDate contractOn;
     private LocalDate contractOff;
     private Integer state;
-    private Date gmtCreate;
-    private Date gmtModified;
+    private LocalDateTime gmtCreate;
+    private LocalDateTime gmtModified;
 }
