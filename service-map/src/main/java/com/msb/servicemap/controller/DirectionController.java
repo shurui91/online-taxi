@@ -11,18 +11,7 @@ import org.springframework.web.bind.annotation.*;
 public class DirectionController {
     @Autowired
     private GoogleDirectionService directionService;
-
-//    @GetMapping("/driving")
-//    public ResponseResult driving(@RequestBody GDForecastPriceDTO forecastPriceDTO) {
-//        String depLongitude = forecastPriceDTO.getDepLatitude();
-//        String depLatitude = forecastPriceDTO.getDepLongitude();
-//        String destLongitude = forecastPriceDTO.getDestLongitude();
-//        String destLatitude = forecastPriceDTO.getDestLatitude();
-//        return directionService.driving(depLongitude, depLatitude, destLongitude, destLatitude);
-//    }
-
-    // 这里只是为了openfeign才改成post
-    @PostMapping("/googledriving")
+    @GetMapping ("/googledriving")
     public ResponseResult driving(@RequestBody GoogleForecastPriceDTO forecastPriceDTO) {
         String startAddress = forecastPriceDTO.getStartAddress();
         String endAddress = forecastPriceDTO.getEndAddress();
