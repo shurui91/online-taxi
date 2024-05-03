@@ -18,6 +18,6 @@ public class CarService {
         car.setGmtCreated(now);
         car.setGmtModified(now);
         carMapper.insert(car);
-        return ResponseResult.success();
+        return ResponseResult.success("Add car success!");
     }
 }
