@@ -47,7 +47,7 @@ public class Car implements Serializable {
     private LocalDate registerDate;
     private Integer commercialType;
     private String fareType;
-    private Boolean state;
+    private Integer state;
     private String tid;
     private LocalDateTime gmtCreated;
     private LocalDateTime gmtModified;
