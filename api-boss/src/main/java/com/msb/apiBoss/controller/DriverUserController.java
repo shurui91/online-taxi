@@ -1,6 +1,8 @@
 package com.msb.apiBoss.controller;
 
+import com.msb.apiBoss.service.CarService;
 import com.msb.apiBoss.service.DriverUserService;
+import com.msb.internalcommon.dto.Car;
 import com.msb.internalcommon.dto.DriverUser;
 import com.msb.internalcommon.dto.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class DriverUserController {
     @Autowired
     private DriverUserService driverUserService;
+
+    @Autowired
+    private CarService carService;
 
     /**
      * 添加司机
@@ -32,5 +37,15 @@ public class DriverUserController {
     @PutMapping("/driver-user")
     public ResponseResult updateDriverUser(@RequestBody DriverUser driverUser) {
         return driverUserService.updateDriverUser(driverUser);
+    }
+
+    /**
+     * 绑定车辆
+     * @param car
+     * @return
+     */
+    @PostMapping("/car")
+    public ResponseResult car(@RequestBody Car car) {
+        return carService.addCar(car);
     }
 }

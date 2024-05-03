@@ -1,5 +1,6 @@
 package com.msb.apiBoss.remote;
 
+import com.msb.internalcommon.dto.Car;
 import com.msb.internalcommon.dto.DriverUser;
 import com.msb.internalcommon.dto.ResponseResult;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -14,4 +15,10 @@ public interface ServiceDriverUserClient {
 
     @RequestMapping(method = RequestMethod.PUT, value = "/user")
     ResponseResult updateDriverUser(@RequestBody DriverUser driverUser);
+
+    @RequestMapping(method = RequestMethod.POST, value = "/car")
+    ResponseResult addCar(@RequestBody Car car);
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/car")
+    ResponseResult updateCar(@RequestBody Car car);
 }
