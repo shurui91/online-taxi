@@ -22,7 +22,7 @@ public class MysqlGenerator {
                                     "service-driver-user/src/main/java/com/msb/serviceDriverUser/mapper")); // 设置mapperXml生成路径
                 })
                 .strategyConfig(builder -> {
-                    builder.addInclude("car"); // 设置需要生成的表名
+                    builder.addInclude("driver_car_binding_relationship"); // 设置需要生成的表名
                 })
                 .templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
                 .execute();
