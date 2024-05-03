@@ -1,9 +1,13 @@
 package com.msb.serviceDriverUser.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.stereotype.Controller;
+import com.msb.internalcommon.dto.Car;
+import com.msb.internalcommon.dto.ResponseResult;
+import com.msb.serviceDriverUser.service.CarService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
@@ -13,8 +17,13 @@ import org.springframework.stereotype.Controller;
  * @author baomidou
  * @since 2024-05-02
  */
-@Controller
-@RequestMapping("/car")
+@RestController
 public class CarController {
+    @Autowired
+    CarService carService;
 
+    @PostMapping("/car")
+    public ResponseResult addCar(@RequestBody Car car) {
+        return carService.addCar(car);
+    }
 }

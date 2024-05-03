@@ -1,6 +1,6 @@
 package com.msb.serviceDriverUser.mapper;
 
-import com.msb.serviceDriverUser.entity.Car;
+import com.msb.internalcommon.dto.Car;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.springframework.stereotype.Repository;
 
