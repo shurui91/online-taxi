@@ -14,11 +14,21 @@ public class DriverUserController {
     @Autowired
     private DriverUserService driverUserService;
 
+    /**
+     * 添加司机
+     * @param driverUser
+     * @return
+     */
     @PostMapping("/driver-user")
     public ResponseResult addDriverUser(@RequestBody DriverUser driverUser) {
         return driverUserService.addDriverUser(driverUser);
     }
 
+    /**
+     * 修改司机
+     * @param driverUser
+     * @return
+     */
     @PutMapping("/driver-user")
     public ResponseResult updateDriverUser(@RequestBody DriverUser driverUser) {
         return driverUserService.updateDriverUser(driverUser);
