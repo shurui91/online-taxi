@@ -1,10 +1,12 @@
 package com.msb.apiDriver.service;
 
 import com.msb.apiDriver.remote.ServiceDriverUserClient;
+import com.msb.apiDriver.remote.ServiceVerificationcodeClient;
 import com.msb.internalcommon.constant.CommonStatusEnum;
 import com.msb.internalcommon.constant.DriverCarConstants;
 import com.msb.internalcommon.dto.ResponseResult;
 import com.msb.internalcommon.response.DriverUserExistsResponse;
+import com.msb.internalcommon.response.NumberCodeResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,9 @@ import org.springframework.stereotype.Service;
 public class VerificationCodeService {
     @Autowired
     ServiceDriverUserClient serviceDriverUserClient;
+
+    @Autowired
+    ServiceVerificationcodeClient serviceVerificationcodeClient;
 
     public ResponseResult checkVerificationCode(String driverPhone) {
         // 查询service-driver-user，该手机号的司机是否存在
@@ -25,6 +30,11 @@ public class VerificationCodeService {
         }
         log.info(driverPhone + " 的司机存在");
         // 获取验证码
+        ResponseResult<NumberCodeResponse> numberCodeResult =
+                serviceVerificationcodeClient.getNumberCode(6);
+        NumberCodeResponse numberCodeResponse = numberCodeResult.getData();
+        int numberCode = numberCodeResponse.getNumberCode();
+        log.info("验证码为：" + numberCode);
 
         // 调用第三方发送验证码
 
