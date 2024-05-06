@@ -1,5 +1,6 @@
 package com.msb.serviceDriverUser.controller;
 
+import com.msb.internalcommon.constant.DriverCarConstants;
 import com.msb.internalcommon.dto.DriverUser;
 import com.msb.internalcommon.dto.ResponseResult;
 import com.msb.internalcommon.response.DriverUserExistsResponse;
@@ -47,9 +48,9 @@ public class UserController {
         ResponseResult<DriverUser> driverUserByPhone = driverUserService.getDriverUserByPhone(driverPhone);
         DriverUser driverPhoneDb = driverUserByPhone.getData();
         DriverUserExistsResponse response = new DriverUserExistsResponse();
-        int exists = 1;
+        int exists = DriverCarConstants.DRIVER_EXISTS;
         if (driverPhoneDb == null) {
-            exists = 0;
+            exists = DriverCarConstants.DRIVER_NOT_EXISTS;
             response.setDriverPhone(driverPhone);
         } else {
             response.setDriverPhone(driverPhoneDb.getDriverPhone() == null ? "" : driverPhoneDb.getDriverPhone());
