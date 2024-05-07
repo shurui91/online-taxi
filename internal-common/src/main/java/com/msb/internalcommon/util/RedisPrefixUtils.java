@@ -2,7 +2,7 @@ package com.msb.internalcommon.util;
 
 public class RedisPrefixUtils {
     // 验证码key前缀
-    public static String verificationCodePrefix = "passenger-verification-code-";
+    public static String verificationCodePrefix = "verification-code-";
 
     // token key前缀
     public static String tokenPrefix = "token-";
@@ -10,11 +10,13 @@ public class RedisPrefixUtils {
     /**
      * 根据手机号生成key
      *
-     * @param phoneNumber
+     * @param phone
+     * @param identity
      * @return
      */
-    public static String generateKeyByPhone(String phoneNumber) {
-        return verificationCodePrefix + phoneNumber;
+    public static String generateKeyByPhone(String phone,
+                                            String identity) {
+        return verificationCodePrefix + identity + "-" + phone;
     }
 
     /**

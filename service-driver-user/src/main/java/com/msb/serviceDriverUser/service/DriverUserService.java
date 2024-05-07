@@ -43,7 +43,7 @@ public class DriverUserService {
         map.put("driver_phone", driverPhone);
         map.put("state", DriverCarConstants.DRIVER_STATE_VALID);
         List<DriverUser> list = driverUserMapper.selectByMap(map);
-        if (list.isEmpty()) {
+        if (list == null || list.isEmpty()) {
             return ResponseResult.fail(CommonStatusEnum.DRIVER_NOT_EXISTS.getCode(), CommonStatusEnum.DRIVER_NOT_EXISTS.getValue());
         }
         DriverUser driverUser = list.get(0);

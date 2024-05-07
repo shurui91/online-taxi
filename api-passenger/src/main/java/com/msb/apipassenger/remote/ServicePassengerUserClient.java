@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @FeignClient("service-passenger-user")
 public interface ServicePassengerUserClient {
     @RequestMapping(method = RequestMethod.POST, value = "/user")
-    ResponseResult<PassengerUser> loginOrRegister(@RequestBody VerificationCodeDTO verificationCodeDTO);
+    ResponseResult loginOrRegister(@RequestBody VerificationCodeDTO verificationCodeDTO);
 
     @RequestMapping(method = RequestMethod.GET, value = "/user/{phone}")
     ResponseResult<PassengerUser> getUserByPhone(@PathVariable("phone") String passengerPhone);

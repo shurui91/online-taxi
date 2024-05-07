@@ -23,12 +23,12 @@ public class UserController {
      */
     @PostMapping("/user")
     public ResponseResult addUser(@RequestBody DriverUser driverUser) {
-        //log.info(JSONObject.fromObject(driverUser).toString());
+        log.info(JSONObject.fromObject(driverUser).toString());
         return driverUserService.addDriverUser(driverUser);
     }
 
     /**
-     * 更新司机
+     * 修改司机
      * @param driverUser
      * @return
      */
@@ -40,6 +40,7 @@ public class UserController {
 
     /**
      * 根据条件查询司机
+     * 如果需要按照司机的多个条件做查询，此处用 /user
      * @param driverUser
      * @return
      */
@@ -48,14 +49,14 @@ public class UserController {
         ResponseResult<DriverUser> driverUserByPhone = driverUserService.getDriverUserByPhone(driverPhone);
         DriverUser driverPhoneDb = driverUserByPhone.getData();
         DriverUserExistsResponse response = new DriverUserExistsResponse();
-        int exists = DriverCarConstants.DRIVER_EXISTS;
+        int ifExists = DriverCarConstants.DRIVER_EXISTS;
         if (driverPhoneDb == null) {
-            exists = DriverCarConstants.DRIVER_NOT_EXISTS;
+            ifExists = DriverCarConstants.DRIVER_NOT_EXISTS;
             response.setDriverPhone(driverPhone);
         } else {
             response.setDriverPhone(driverPhoneDb.getDriverPhone() == null ? "" : driverPhoneDb.getDriverPhone());
         }
-        response.setExists(exists);
+        response.setExists(ifExists);
         return ResponseResult.success(response);
     }
 }
