@@ -71,16 +71,16 @@ public class VerificationCodeService {
      */
     public ResponseResult checkCode(String passengerPhone, String verificationCode) throws UnsupportedEncodingException {
         // 根据手机号，去redis读取验证码
-        System.out.println("根据手机号，去redis读取验证码");
+        System.out.println("根据手机号，去redis读取乘客的验证码");
         // 生成key
         String key = RedisPrefixUtils.generateKeyByPhone(passengerPhone,
                 IdentityConstants.PASSENGER_IDENTITY);
         // 根据key获取value
         String codeInRedis = stringRedisTemplate.opsForValue().get(key);
-        System.out.println("redis中的验证码为：" + codeInRedis);
+        System.out.println("redis中乘客的验证码为：" + codeInRedis);
 
         // 校验验证码
-        System.out.println("校验验证码");
+        System.out.println("校验乘客验证码");
         // 判断验证码是否为空
         if (StringUtils.isBlank(codeInRedis + "") || codeInRedis == null) {
             return ResponseResult.fail(CommonStatusEnum.VERIFICATION_CODE_ERROR.getCode(),
