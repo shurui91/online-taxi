@@ -9,4 +9,22 @@ public class TestController {
     public String test() {
         return "api-driver is running";
     }
+
+    /**
+     * 需要授权的接口
+     * @return
+     */
+    @GetMapping("/auth")
+    public String testAuth() {
+        return "auth is running";
+    }
+
+    /**
+     * 不需要授权的接口
+     * @return
+     */
+    @GetMapping("/noauth")
+    public String testNoAuth() {
+        return "no auth is running";
+    }
 }
